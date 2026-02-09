@@ -1,0 +1,24 @@
+name: Run python tests with pytest
+# on: push
+on: [repository_dispatch, workflow_dispatch]
+jobs:
+  pytest_and_coverage:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+        python-version:
+          - '3.12'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Dependencies
+        run: |
+          apt install -y base-files bash coreutils libc-bin libc6:amd64 libfribidi0:amd64 libpython3.12-minimal:amd64 libpython3.12-stdlib:amd64 locales media-types ncurses-base openssl python3.12-minimal tzdata
+          pip install cloudpickle==3.1.2 diskcache==5.6.3 docstring_parser==0.17.0 duckduckgo_search==8.1.1 fakeredis==2.33.0 importlib_metadata==8.7.1 pathvalidate==3.3.1 prometheus_client==0.24.1 pydantic_core==2.41.5 pytz==2025.2 semchunk==2.2.2 sentinels==1.1.1 uuid_utils==0.13.0 uv==0.9.26 wheel==0.45.1
+      - name: Execute Tests
+        run: |
+          python -m pytest --cov=application --cov-report=xml --cov-report=term-missing
