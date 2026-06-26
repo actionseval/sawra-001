@@ -2,6 +2,9 @@ name: pytest_and_coverage
 
 on: [workflow_dispatch]
 
+permissions:
+  contents: read
+
 jobs:
   pytest_and_coverage:
     runs-on: ubuntu-latest
