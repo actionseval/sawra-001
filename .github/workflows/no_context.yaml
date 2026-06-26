@@ -9,6 +9,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
       - name: Run tests and install dependencies
         run: |
           # sudo apt install -y base-files bash coreutils libc-bin libc6:amd64 libfribidi0:amd64 libpython3.12-minimal:amd64 libpython3.12-stdlib:amd64 locales media-types ncurses-base openssl python3.12-minimal tzdata
